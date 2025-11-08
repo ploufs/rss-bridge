@@ -4,13 +4,26 @@ declare(strict_types=1);
 
 class MaturinBridge extends BridgeAbstract
 {
-    const NAME = 'maturin.ca (soldes,Nouveauté)';
+    const NAME = 'maturin.ca';
     const URI = 'https://www.maturin.ca/';
     const DESCRIPTION = 'Les produits sur le site de Maturin';
+    const PARAMETERS = [
+        [
+            'productType' => [
+                'type' => 'list',
+                'name' => 'Produits',
+                'title' => 'Choisir le type de produit',
+                'values' => [
+                    'soldes' => 'soldes',
+                    'nouveautés' => 'vedette/nouveaute',
+                ],
+            ]
+        ]
+    ];
 
     public function collectData()
     {
-        $url = self::URI . 'soldes';
+        $url = self::URI . $this->getInput('productType');
         $itemSelector = 'div.mobile_product_box';
         $itemTitleSelector = 'div.masonry-product div.product div.product-title a';
         $ItemContentSelector = 'div.masonry-product';
